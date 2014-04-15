@@ -1,23 +1,20 @@
 //
-//  SolveBalanceEquations.m
-//  MyHannouki
+//  improvedEuler.m
+//  
 //
-//  Created by labuser on 4/14/14.
-//  Copyright (c) 2014 varnerlabs. All rights reserved.
+//  Created by labuser on 4/15/14.
+//
 //
 
-#import "SolveBalanceEquations.h"
-#import "BalanceEquations.h"
-
-@implementation SolveBalanceEquations
+#import "improvedEuler.h"
 
 
+@implementation improvedEuler
 
 @synthesize tStep = _tStep;
 @synthesize tStop = _tStop;
 @synthesize tStart = _tStart;
 @synthesize dataFile = _dataFile;
-
 
 - (id)init {
     self = [super init];
@@ -44,6 +41,12 @@
 }
 
 
+
+
+
+
+
+
 - (void) obtainDataFileValues
 {
     // We need to add the resize bit to all of these
@@ -61,36 +64,52 @@
     
     NSMutableArray *xOutputMatrix = [[NSMutableArray alloc] initWithCapacity:10];
     NSMutableArray *timeOutputVector = [[NSMutableArray alloc] initWithCapacity:10];
-    float xdot, x0, xtilde,TSIM;
-    int neqn, iteration;
+    
+    
+    float xdot, xCurr, xNext,TSIM;
+    int neqn, timeStepIndex;
+    
     // Step 1: Get the initial conditions, To, Tf, Ts, Number of steps
+    
     int numberOfSteps = (_tStop - _tStart)/_tStep;
     
     // Step 2: Preset some things for simulation
     
-    x0 = initialConditionsVector;
-    neqn = Count(x0);
-    xOutputMatrix(1:neqn,1) = x0;
+    xCurr = initialConditionsVector;
+    neqn = Count(xCurr);
+    xOutputMatrix(1:neqn,1) = xCurr;
     t0 = _tStart;
-    timeOutputVector (_tStart:_tStop,_tStep) = TSIM;
+    
+    
+    //timeOutputVector (_tStart:_tStop,_tStep) = TSIM;
+    
     // Step 3: Actual part of the code
-    for iteration = 1:numberOfSteps
+    for timeStepIndex = 1:numberOfSteps
         
-        t = TSIM(iteration)
-        BalanceEquations(float xdot, float x0, float stoichiometricMatrix, float DF, float t, float kV);
-    BalanceEquations1 = xdot;
+        t = TSIM(timeStepIndex)
+        
+        BalanceEquations(float xdot, float t, float xCurr, float DF, float stoichiometricMatrix, float kV);
     
-    xNext = x0 + ((DXDT+BalanceEquations(t+1, x0, DF, stoichiometricMatrix, kV)*_tStep)/2);
-    timeSecondEval = t0 + (_tStep/2);
+    BalanceEquationsCall1 = xdot;
     
-    DXDT = BalanceEquations(float xdot, float xtilde, float stoichiometricMatrix);
-    BalanceEquations1 = xdot;
-    x0 = x0 + massBalanceSecondCall;
+    timeSecondEval = t0 + (_tStep);
+    xModified = xCurr+_tStep*xdot;
+    
+    BalanceEquations(float timeSecondEval, float xModified, float DF, float stoichiometricMatrix)
+    
+    BalanceEquationsCall2 = xdot;
+    
+    xNext = xCurr + 0.5*(BalanceEquationsCall1+BalanceEquationsCall2*_tStep)
+    
+    
+    x0 = x0 + BalanceEquationsCall2;
     
     t0 = t0 + _tStep;
     
+    
+    
     // Append solution to the xCompile
-    xOutputMatrix(1:neqn,iteration+1) = x0;
+    xOutputMatrix(1:neqn,timeStepIndex+1) = xCurr;
     
     end
     
@@ -108,3 +127,4 @@
     
 }
 @end
+
