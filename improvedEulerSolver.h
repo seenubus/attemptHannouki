@@ -1,14 +1,14 @@
 //
-//  SolveBalanceEquations.h
-//  MyHannouki
+//  improvedEuler.h
+//  
 //
-//  Created by labuser on 4/14/14.
-//  Copyright (c) 2014 varnerlabs. All rights reserved.
+//  Created by labuser on 4/15/14.
+//
 //
 
 #import <Foundation/Foundation.h>
 
-@interface SolveBalanceEquations : NSObject
+@interface improvedEuler : NSObject
 {
     //   id RHS;
 @protected
@@ -33,5 +33,4 @@
 @property (retain) NSMutableDictionary *dataFile;
 
 -(void) obtainDataFileValues;
-
 @end
