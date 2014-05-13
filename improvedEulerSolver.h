@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface improvedEuler : NSObject
+
+    
 {
     //   id RHS;
 @protected
@@ -20,6 +22,7 @@
     float **initialConditionsVector;
     float **stoichiometricMatrix;
     float **measurementIndexVector;
+    //float **BalanceEquationsCall1;
     NSMutableDictionary* _dataFile;
     
     
