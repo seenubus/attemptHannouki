@@ -11,6 +11,17 @@
 
 @implementation improvedEuler
 
+//
+//  improvedEulerSolver.m
+//  hannoukiSolver
+//
+//  Created by Guest User on 5/13/14.
+//  Copyright (c) 2014 anurag. All rights reserved.
+//
+
+#import "improvedEulerSolver.h"
+
+@implementation improvedEulerSolver
 @synthesize tStep = _tStep;
 @synthesize tStop = _tStop;
 @synthesize tStart = _tStart;
@@ -36,7 +47,7 @@
     
     // Clean up my iVars -
     self.dataFile = nil;
-    [super dealloc];
+    
     
 }
 
@@ -66,7 +77,8 @@
     NSMutableArray *timeOutputVector = [[NSMutableArray alloc] initWithCapacity:10];
     
     
-    float xdot, xCurr, xNext,TSIM;
+    float xdot, xCurr, xNext,TSIM, t0, t,timeSecondEval, xModified, BalanceEquationsCall1, BalanceEquationsCall2, x0;
+    float BalanceEquations();
     int neqn, timeStepIndex;
     
     // Step 1: Get the initial conditions, To, Tf, Ts, Number of steps
@@ -76,30 +88,31 @@
     // Step 2: Preset some things for simulation
     
     xCurr = initialConditionsVector;
-    neqn = Count(xCurr);
-    xOutputMatrix(1:neqn,1) = xCurr;
+    neqn = [xCurr count];
+    xOutputMatrix(1:neqn),1) = xCurr;
     t0 = _tStart;
     
     
     //timeOutputVector (_tStart:_tStop,_tStep) = TSIM;
     
     // Step 3: Actual part of the code
-    for timeStepIndex = 1:numberOfSteps
+    for (timeStepIndex = 1; timeStepIndex <= numberOfSteps; timeStepIndex ++){
         
-        t = TSIM(timeStepIndex)
-        
+        t = timeStepIndex;
+    }
         BalanceEquations(float xdot, float t, float xCurr, float DF, float stoichiometricMatrix, float kV);
     
     BalanceEquationsCall1 = xdot;
     
     timeSecondEval = t0 + (_tStep);
+    
     xModified = xCurr+_tStep*xdot;
     
     BalanceEquations(float timeSecondEval, float xModified, float DF, float stoichiometricMatrix)
     
     BalanceEquationsCall2 = xdot;
     
-    xNext = xCurr + 0.5*(BalanceEquationsCall1+BalanceEquationsCall2*_tStep)
+    xNext = xCurr + 0.5*(BalanceEquationsCall1+BalanceEquationsCall2*_tStep);
     
     
     x0 = x0 + BalanceEquationsCall2;
@@ -111,7 +124,7 @@
     // Append solution to the xCompile
     xOutputMatrix(1:neqn,timeStepIndex+1) = xCurr;
     
-    end
+    
     
     // Logic to construct dataFile -
     [solution setObject:xOutputMatrix forKey:@"xMatrix"];
@@ -120,11 +133,13 @@
     // Now take care of memory management
     
     // Return to caller -
-    [release pool];
+
     
     return [solution autorelease];
     
     
 }
+
 @end
+
 
