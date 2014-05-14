@@ -1,16 +1,14 @@
 //
-//  improvedEuler.h
-//  
+//  improvedEulerSolver.h
+//  hannouki
 //
-//  Created by labuser on 4/15/14.
-//
+//  Created by Guest User on 5/14/14.
+//  Copyright (c) 2014 Guest User. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface improvedEuler : NSObject
-
-    
+@interface improvedEulerSolver : NSObject
 {
     //   id RHS;
 @protected
@@ -36,4 +34,5 @@
 @property (retain) NSMutableDictionary *dataFile;
 
 -(void) obtainDataFileValues;
+
 @end
