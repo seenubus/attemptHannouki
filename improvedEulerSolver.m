@@ -1,27 +1,16 @@
 //
-//  improvedEuler.m
-//  
-//
-//  Created by labuser on 4/15/14.
-//
-//
-
-#import "improvedEuler.h"
-
-
-@implementation improvedEuler
-
-//
 //  improvedEulerSolver.m
-//  hannoukiSolver
+//  hannouki
 //
-//  Created by Guest User on 5/13/14.
-//  Copyright (c) 2014 anurag. All rights reserved.
+//  Created by Guest User on 5/14/14.
+//  Copyright (c) 2014 Guest User. All rights reserved.
 //
 
 #import "improvedEulerSolver.h"
 
 @implementation improvedEulerSolver
+#import "improvedEulerSolver.h"
+
 @synthesize tStep = _tStep;
 @synthesize tStop = _tStop;
 @synthesize tStart = _tStart;
@@ -75,6 +64,7 @@
     
     NSMutableArray *xOutputMatrix = [[NSMutableArray alloc] initWithCapacity:10];
     NSMutableArray *timeOutputVector = [[NSMutableArray alloc] initWithCapacity:10];
+   // NSMutableArray *xCurr = [[[NSMutableArray alloc]] initWithCapacity: 10];
     
     
     float xdot, xCurr, xNext,TSIM, t0, t,timeSecondEval, xModified, BalanceEquationsCall1, BalanceEquationsCall2, x0;
@@ -87,9 +77,9 @@
     
     // Step 2: Preset some things for simulation
     
-    xCurr = initialConditionsVector;
-    neqn = [xCurr count];
-    xOutputMatrix(1:neqn),1) = xCurr;
+    //xCurr = [initialConditionsVector];
+    neqn=sizeof(xCurr);
+    //xOutputMatrix = xCurr;
     t0 = _tStart;
     
     
@@ -100,7 +90,7 @@
         
         t = timeStepIndex;
     }
-        BalanceEquations(float xdot, float t, float xCurr, float DF, float stoichiometricMatrix, float kV);
+    BalanceEquations(float xdot, float t, float xCurr, float DF, float stoichiometricMatrix, float kV);
     
     BalanceEquationsCall1 = xdot;
     
@@ -121,7 +111,7 @@
     
     
     
-    // Append solution to the xCompile
+    // Append solution
     xOutputMatrix(1:neqn,timeStepIndex+1) = xCurr;
     
     
@@ -133,7 +123,7 @@
     // Now take care of memory management
     
     // Return to caller -
-
+    
     
     return [solution autorelease];
     
@@ -141,5 +131,3 @@
 }
 
 @end
-
-
