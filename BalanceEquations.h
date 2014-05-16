@@ -1,20 +1,43 @@
+//
+//  BalanceEqns.h
+//  hannouki
+//
+//  Created by Guest User on 5/15/14.
+//  Copyright (c) 2014 Guest User. All rights reserved.
+//
+
 #import <Foundation/Foundation.h>
 
-#define ROW 1234
-#define COLUMN 1234
 
-@protocol MassBalanceProtocol <NSObject>
+@protocol BalanceEqnsProtocol <NSObject>
 
-/* calculatekinetic () */
-void evaluateMassBalance(register float xdot[],register float state[],register float network[][COLUMN]);
-
+void EvaluateBalanceEqns ( register float dxdt[], register float initialConditionsVector [], register float parameterVector[]);
 @end
 
-@interface MassBalance : NSObject <MassBalanceProtocol> {
-@private
-    NSMutableArray *rateConstant;
+@interface BalanceEqns : NSObject<BalanceEqnsProtocol> {
+    
+    @private
+    NSMutableArray * dxdt;
+
+    @protected
+        double _tStart;
+        double _tStop;
+        double _tStep;
+        double _numRates;
+        float ** rateConstantVector;
+        float ** initialConditionsVector;
+        float ** parameterVector;
+        NSMutableDictionary * _dataFile;
+    
 }
 
-@property(retain) NSMutableArray *rateConstant;
+-(void) print;
+@property (assign) double tStart;
+@property (assign) double tStop;
+@property (assign) double tStep;
+@property (assign) double numRates;
+@property (retain) NSMutableDictionary *dataFile;
+-(void) obtainDataFileValues;
+@property (retain) NSMutableArray *dxdt;
 
 @end
