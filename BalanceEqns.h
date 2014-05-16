@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "kinetics.h"
+#import "DataFile.h"
 
 @protocol BalanceEqnsProtocol <NSObject>
 
@@ -27,7 +28,7 @@ void EvaluateBalanceEqns ( register float dxdt[], register float initialConditio
         float ** rateConstantVector;
         float ** initialConditionsVector;
         float ** parameterVector;
-        NSMutableDictionary * _dataFile;
+        DataFile * _dataFile;
     
 }
 
@@ -36,7 +37,7 @@ void EvaluateBalanceEqns ( register float dxdt[], register float initialConditio
 @property (assign) double tStop;
 @property (assign) double tStep;
 @property (assign) double numRates;
-@property (retain) NSMutableDictionary *dataFile;
+@property (retain) DataFile *dataFile;
 -(void) obtainDataFileValues;
 @property (retain) NSMutableArray *dxdt;
 
