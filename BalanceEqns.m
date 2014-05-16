@@ -7,18 +7,21 @@
 //
 
 #import "BalanceEqns.h"
-#import "kinetics.h"
-#import "computeInputFlowRate"
+//#import "computeInputFlowRate"
 
 @implementation BalanceEqns
 @synthesize dxdt;
 @synthesize numRates = _numRates;
 @synthesize dataFile = _dataFile;
 
--(id) init{ self[super init];
-    if (self){NSMutableArray *dxdt[[NSMutableARray alloc] init];
+-(id) init
+{
+    self = [super init];
+    if (self)
+    {
+        NSMutableArray *dxdt = [[NSMutableArray alloc] init];
         NSNumber *DXDT = [NSNumber numberWithFloat:0.2f];
-        [dxdt addObject: DXDT];
+        [dxdt addObject:DXDT];
     }
     return self;
 }
@@ -28,8 +31,11 @@
 {
     //how to store float type objects in these vectors/arrays???
     //that's what i'm trying to do here...
+    self.dataFile = [[DataFile alloc] init];
+    NSMutableDictionary *dictionary = [[self dataFile] constructDataStructure];
     
-    rateConstantVector = [self.dataFile valueForKey:@"RateConstantVector"];
+    
+    rateConstantVector = [dictionary objectForKey:@"RateConstantVector"];
     NSNumber *num = [NSNumber numberWithFloat:0.2f];
     [rateConstantVector addObject:num];
     
@@ -53,7 +59,7 @@ void EvaluateBalanceEqns (register float dxdt[], register float initialCondition
     evaluateKinetics ( register float rV[], register float initialConditionsVector[], register float parameterVector[]);
 
     
-  FIN = ComputeInputFlowRate( );
+    FIN =0;// ComputeInputFlowRate( );
   
     
     X = initialConditionsVector[0];
